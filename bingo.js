@@ -1,8 +1,10 @@
 const pdf = require("html-pdf");
 const fs = require("fs");
 
-const pathFile = require.resolve("./header.html");
-let html = fs.readFileSync(pathFile, 'utf8')
+const pathFileHeader = require.resolve("./header.html");
+const pathFileDate = require.resolve("./date.html");
+let html = fs.readFileSync(pathFileHeader, 'utf8')
+let htmlDate = fs.readFileSync(pathFileDate, 'utf8')
 
 const number_tables = 100;
 let body = '';
@@ -91,6 +93,8 @@ for (let index = 0; index < number_tables; index++) {
 
     body += `
     <div class="table">
+        {{date}}
+
         <table>
             <thead>
                 <tr>
@@ -122,6 +126,7 @@ for (let index = 0; index < number_tables; index++) {
     </div>
     `;
 
+    body = body.replace("{{date}}", htmlDate);
     body = body.replace("{{columnB}}", columnB);
     body = body.replace("{{columnI}}", columnI);
     body = body.replace("{{columnN}}", columnN);
@@ -130,6 +135,7 @@ for (let index = 0; index < number_tables; index++) {
 }
 
 html = html.replace("{{body}}", body);
+
  
 pdf.create(html).toFile("tablas.pdf", (error) => {
     if (error) {
