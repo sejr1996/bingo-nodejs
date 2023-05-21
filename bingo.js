@@ -6,7 +6,7 @@ const pathFileDate = require.resolve("./date.html");
 let html = fs.readFileSync(pathFileHeader, 'utf8')
 let htmlDate = fs.readFileSync(pathFileDate, 'utf8')
 
-const number_tables = 100;
+const number_tables = 200;
 let body = '';
 
 function getRandomInt(min, max) {
@@ -91,8 +91,10 @@ for (let index = 0; index < number_tables; index++) {
     const columnG = getColumnValues(matrix[3]);
     const columnO = getColumnValues(matrix[4]);
 
+    const className = index % 2 === 0 ? 'table' : 'table2';
+
     body += `
-    <div class="table">
+    <div class="${className}">
         {{date}}
 
         <table>
